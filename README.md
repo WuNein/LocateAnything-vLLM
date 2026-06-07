@@ -1,5 +1,24 @@
 # LocateAnything-vLLM: Accelerated Inference via Prompt Embeddings 🚀
 
+```
+图片: DSC_1274.jpg -> [本地ViT+缝合]: 74.9ms | [远端vLLM生成]: 251.8ms
+图片: DSC_1291.jpg -> [本地ViT+缝合]: 73.5ms | [远端vLLM生成]: 270.2ms
+图片: DSC_1292.jpg -> [本地ViT+缝合]: 42.8ms | [远端vLLM生成]: 266.3ms
+
+========================================
+           BENCHMARK REPORT           
+========================================
+成功处理图片数: 93/94
+单图平均 本地ViT 耗时: 99.91 ms
+单图平均 远端vLLM 耗时: 296.84 ms
+【对比结论】: vLLM 是 ViT 的 3.0 倍耗时
+----------------------------------------
+总并发实际墙钟耗时 (Wall Time): 11.34 秒
+系统吞吐量 (Throughput): 8.20 images/sec
+========================================
+```
+
+
 [🇺🇸 English](#english) | [🇨🇳 中文](#chinese)
 
 <a id="english"></a>
