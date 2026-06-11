@@ -1,0 +1,1 @@
+docker run -it -d -p 33333:33333 --gpus=all --ipc=host vllm/vllm-openai:nightly --model shigureui/LocateAnything-Qwen2-FP8 --tensor-parallel-size 1 --gpu-memory-utilization 0.5 --kv-cache-dtype auto --max-model-len 16384 --max-num-seqs 32 --max-cudagraph-capture-size 32 --enable-prompt-embeds --host 0.0.0.0 --port 33333
