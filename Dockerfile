@@ -8,11 +8,12 @@ WORKDIR /app
 # 禁用 pip 缓存以减小镜像体积，设置 Python 环境变量
 ENV PIP_NO_CACHE_DIR=1 \
     PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
+    PYTHONDONTWRITEBYTECODE=1\
+    PIP_BREAK_SYSTEM_PACKAGES=1
 
 # 5. 安装 Python 依赖
 RUN pip install --upgrade pip && \
-    pip install --break-system-packages \
+    pip install \
     opencv-python-headless==4.11.0.86 \
     transformers==4.57.1 \
     "numpy<=1.26.0" \
