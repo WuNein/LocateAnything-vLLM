@@ -25,6 +25,8 @@ RUN pip install --upgrade pip && \
     uvicorn \
     python-multipart
 
+# 6. 复制项目代码
+# COPY ./app.py /app
 
 # 7. 暴露 FastAPI 默认端口
 EXPOSE 8000
