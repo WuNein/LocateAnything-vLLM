@@ -12,7 +12,7 @@ ENV PIP_NO_CACHE_DIR=1 \
 
 # 5. 安装 Python 依赖
 RUN pip install --upgrade pip && \
-    pip install \
+    pip install --break-system-packages \
     opencv-python-headless==4.11.0.86 \
     transformers==4.57.1 \
     "numpy<=1.26.0" \
@@ -23,7 +23,7 @@ RUN pip install --upgrade pip && \
     lmdb==1.7.5 \
     fastapi \
     uvicorn \
-    python-multipart
+    python-multipart 
 
 # 6. 复制项目代码
 # COPY ./app.py /app
