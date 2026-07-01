@@ -58,7 +58,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ std.summary_tags || steps.meta.outputs.tags }}
+          # 修复这里：移除了错误的 std 前缀，直接使用 metadata 输出的 tags
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           # 开启缓存，大幅提升后续构建速度
           cache-from: type=gha
