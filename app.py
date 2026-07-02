@@ -59,8 +59,11 @@ class ModelServer:
         self.standalone_embed_tokens = self.standalone_embed_tokens.to(self.device)
         
         print("====== 4. 初始化 vLLM 客户端 ======")
-        # 这里的 base_url 可以根据实际 vLLM 服务位置微调
-        self.vllm_client = OpenAI(api_key="EMPTY", base_url="http://localhost:8000/v1")
+        # base_url 可通过环境变量 VLLM_BASE_URL 配置，默认连本机 8000 端口
+        self.vllm_base_url = os.environ.get("VLLM_BASE_URL", "http://localhost:8000/v1")
+        self.vllm_model = os.environ.get("VLLM_MODEL", "shigureui/LocateAnything-Qwen2-FP8")
+        self.vllm_client = OpenAI(api_key="EMPTY", base_url=self.vllm_base_url)
+        print(f"vLLM 服务端: {self.vllm_base_url}, 模型名: {self.vllm_model}")
         
         # 异步锁：确保本地 GPU 提取特征时单线程排队，防止显存爆炸
         self.gpu_lock = asyncio.Lock()
@@ -190,7 +193,7 @@ async def predict(
         completion = await loop.run_in_executor(
             None, 
             lambda: server.vllm_client.completions.create(
-                model="shigureui/LocateAnything-Qwen2-FP8",
+                model=self.vllm_model,
                 prompt=None,
                 max_tokens=1024,
                 temperature=0.0,

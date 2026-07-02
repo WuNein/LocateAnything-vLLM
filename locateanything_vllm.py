@@ -52,8 +52,10 @@ class AdvancedLocateBenchmark:
         self.standalone_embed_tokens = self.standalone_embed_tokens.to(self.device)
         
         print("====== 4. 初始化 vLLM 客户端 ======")
-        self.vllm_client = OpenAI(api_key="EMPTY", base_url="http://localhost:8000/v1")
-        print("初始化成功！")
+        self.vllm_base_url = os.environ.get("VLLM_BASE_URL", "http://localhost:8000/v1")
+        self.vllm_model = os.environ.get("VLLM_MODEL", "shigureui/LocateAnything-Qwen2-FP8")
+        self.vllm_client = OpenAI(api_key="EMPTY", base_url=self.vllm_base_url)
+        print(f"vLLM 服务端: {self.vllm_base_url}, 模型名: {self.vllm_model}")
 
     def _tensor2base64(self, x: torch.Tensor) -> str:
         with io.BytesIO() as buf:
@@ -113,7 +115,7 @@ class AdvancedLocateBenchmark:
             # 3. 远端 vLLM 请求阶段 (计时开始)
             start_vllm = time.perf_counter()
             completion = self.vllm_client.completions.create(
-                model="shigureui/LocateAnything-Qwen2-FP8",
+                model=self.vllm_model,
                 prompt=None,
                 max_tokens=1024,
                 temperature=0.0,
